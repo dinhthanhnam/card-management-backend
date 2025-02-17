@@ -1,5 +1,6 @@
-package com.api.cardmanagementapp.user;
+package com.api.cardmanagementapp.repository;
 
+import com.api.cardmanagementapp.model.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Optional;

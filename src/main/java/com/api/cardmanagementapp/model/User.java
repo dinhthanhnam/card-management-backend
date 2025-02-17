@@ -1,4 +1,4 @@
-package com.api.cardmanagementapp.user;
+package com.api.cardmanagementapp.model;
 
 import jakarta.persistence.*;
 import lombok.*;
@@ -15,22 +15,23 @@ import java.util.List;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
+
 public class User implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    int id;
+    private int id;
 
     @Column(nullable = false)
-    String name;
+    private String name;
 
     @Column(nullable = false, unique = true)
-    String email;
+    private String email;
 
     @Column(nullable = false)
-    String password;
+    private String password;
 
     @Enumerated(EnumType.STRING)
-    Role role;
+    private Role role;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
@@ -45,5 +46,9 @@ public class User implements UserDetails {
     @Override
     public String getPassword() {
         return password;
+    }
+
+    public enum Role {
+        USER, ADMIN
     }
 }
