@@ -1,8 +1,10 @@
 package com.api.cardmanagementapp.controller;
 
+import com.api.cardmanagementapp.model.Card;
 import com.api.cardmanagementapp.model.Client;
 import com.api.cardmanagementapp.model.Contract;
 import com.api.cardmanagementapp.repository.ClientRepository;
+import com.api.cardmanagementapp.service.CardService;
 import com.api.cardmanagementapp.service.ClientService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -14,19 +16,19 @@ import java.util.Collection;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/api/v1/clients")
+@RequestMapping("/api/v1/cards")
 @RequiredArgsConstructor
-public class ClientController {
-    private final ClientService clientService;
+public class CardController {
+    private final CardService cardService;
 
     @GetMapping
-    public ResponseEntity<Collection<Client>> getAllClients() {
-        return ResponseEntity.ok(clientService.getAllClients());
+    public ResponseEntity<Collection<Card>> getAllCards() {
+        return ResponseEntity.ok(cardService.getAllCards());
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Client> getClientById(@PathVariable int id) {
-        return clientService.getClientById(id)
+    public ResponseEntity<Card> getCardById(@PathVariable int id) {
+        return cardService.getCardById(id)
                 .map(ResponseEntity::ok)
                 .orElseGet(() -> ResponseEntity.notFound().build());
     }

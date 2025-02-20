@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.time.LocalDateTime;
 import java.util.Collections;
 import java.util.List;
 import java.util.Random;
@@ -28,6 +29,9 @@ public class Contract {
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     private ContractType contractType; // PARENT hoặc CHILD
+
+    @Column
+    private LocalDateTime expireAt;
 
     @ManyToOne
     @JoinColumn(name = "parent_id") // Self-Reference: Chỉ có Issuing mới có Parent

@@ -92,7 +92,7 @@ public class DatabaseSeeder implements ApplicationRunner {
                         .lastName("Soi")
                         .email("tung.soi@example.com")
                         .phone("0987654431")
-                        .identityNumber("43254321")
+                        .identityNumber("432543211")
                         .dateOfBirth(LocalDateTime.of(2002, 11, 4, 0 ,0))
                         .build(),
                 Client.builder()
@@ -152,19 +152,52 @@ public class DatabaseSeeder implements ApplicationRunner {
 
         List<Client> savedClients = clientRepository.findAll();
 
-        Contract parentContract = Contract.builder()
-                .contractType(Contract.ContractType.LIABILITY)
-                .client(savedClients.getFirst()) // ✅ Đảm bảo client không phải null
-                .build();
+        List<Contract> parentsContracts = List.of(
+                Contract.builder()
+                        .contractType(Contract.ContractType.LIABILITY)
+                        .client(savedClients.getFirst()) // ✅ Đảm bảo client không phải null
+                        .build(),
+                Contract.builder()
+                        .contractType(Contract.ContractType.LIABILITY)
+                        .client(savedClients.get(1)) // ✅ Đảm bảo client không phải null
+                        .build()
+        );
 
-        Contract childContract = Contract.builder()
-                .contractType(Contract.ContractType.ISSUING)
-                .parent(parentContract)
-                .client(savedClients.getFirst())// ✅ Gán parent contract
-                .build();
+//        Contract parentContract = Contract.builder()
+//                .contractType(Contract.ContractType.LIABILITY)
+//                .client(savedClients.getFirst()) // ✅ Đảm bảo client không phải null
+//                .build();
 
-        contractRepository.save(parentContract);
-        contractRepository.save(childContract);
+        List<Contract> childrenContracts = List.of(
+                Contract.builder()
+                        .contractType(Contract.ContractType.ISSUING)
+                        .parent(parentsContracts.getFirst())
+                        .client(savedClients.getFirst())// ✅ Gán parent contract
+                        .build(),
+                Contract.builder()
+                        .contractType(Contract.ContractType.ISSUING)
+                        .parent(parentsContracts.getFirst())
+                        .client(savedClients.getFirst())// ✅ Gán parent contract
+                        .build(),
+                Contract.builder()
+                        .contractType(Contract.ContractType.ISSUING)
+                        .parent(parentsContracts.get(1))
+                        .client(savedClients.get(1))// ✅ Gán parent contract
+                        .build(),
+                Contract.builder()
+                        .contractType(Contract.ContractType.ISSUING)
+                        .parent(parentsContracts.get(1))
+                        .client(savedClients.get(1))// ✅ Gán parent contract
+                        .build()
+        );
+//        Contract childContract = Contract.builder()
+//                .contractType(Contract.ContractType.ISSUING)
+//                .parent(parentContract)
+//                .client(savedClients.getFirst())// ✅ Gán parent contract
+//                .build();
+
+        contractRepository.saveAll(parentsContracts);
+        contractRepository.saveAll(childrenContracts);
 
         List<Contract> savedContracts = contractRepository.findAll();
 
@@ -176,7 +209,7 @@ public class DatabaseSeeder implements ApplicationRunner {
                         .cardLimit(BigDecimal.valueOf(50000000))
                         .cardBalance(BigDecimal.valueOf(100000000))
                         .expireAt(LocalDateTime.of(2028, 12, 12, 5, 0))
-                        .contract(savedContracts.get(1))
+                        .contract(savedContracts.get(2))
                         .build(),
                 Card.builder()
                         .cardType(Card.CardType.PREPAID)
@@ -185,7 +218,7 @@ public class DatabaseSeeder implements ApplicationRunner {
                         .cardLimit(BigDecimal.valueOf(50000000))
                         .cardBalance(BigDecimal.valueOf(100000000))
                         .expireAt(LocalDateTime.of(2028, 12, 12, 5, 0))
-                        .contract(savedContracts.get(1))
+                        .contract(savedContracts.get(2))
                         .build(),
                 Card.builder()
                         .cardType(Card.CardType.CREDIT)
@@ -194,7 +227,7 @@ public class DatabaseSeeder implements ApplicationRunner {
                         .cardLimit(BigDecimal.valueOf(50000000))
                         .cardBalance(BigDecimal.valueOf(100000000))
                         .expireAt(LocalDateTime.of(2028, 12, 12, 5, 0))
-                        .contract(savedContracts.get(1))
+                        .contract(savedContracts.get(3))
                         .build()
         );
 

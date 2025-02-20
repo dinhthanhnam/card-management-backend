@@ -1,6 +1,7 @@
 package com.api.cardmanagementapp.filter;
 
 import com.api.cardmanagementapp.service.JwtService;
+import io.jsonwebtoken.ExpiredJwtException;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -15,9 +16,9 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import java.io.IOException;
+
 @Component
 @RequiredArgsConstructor
-
 public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
     private final JwtService jwtService;
@@ -34,6 +35,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         System.out.println("Request to: " + requestURI);
 
         final String authHeader = request.getHeader("Authorization");
+
         if (authHeader == null || !authHeader.startsWith("Bearer ")) {
             System.out.println("No JWT found, continuing without authentication");
             filterChain.doFilter(request, response);
@@ -41,8 +43,22 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         }
 
         final String jwt = authHeader.substring(7);
-        final String userEmail = jwtService.extractUsername(jwt);
-        System.out.println("Extracted user: " + userEmail);
+        final String userEmail;
+
+        try {
+            userEmail = jwtService.extractUsername(jwt);
+            System.out.println("Extracted user: " + userEmail);
+        } catch (ExpiredJwtException ex) {
+            System.err.println("JWT expired: " + ex.getMessage());
+            response.setStatus(HttpServletResponse.SC_UNAUTHORIZED); // 401 Unauthorized
+            response.getWriter().write("JWT expired, please login again");
+            return;
+        } catch (Exception ex) {
+            System.err.println("Invalid JWT: " + ex.getMessage());
+            response.setStatus(HttpServletResponse.SC_BAD_REQUEST); // 400 Bad Request
+            response.getWriter().write("Invalid token");
+            return;
+        }
 
         if (userEmail != null && SecurityContextHolder.getContext().getAuthentication() == null) {
             UserDetails userDetails = userDetailsService.loadUserByUsername(userEmail);
@@ -57,5 +73,4 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
         filterChain.doFilter(request, response);
     }
-
 }
