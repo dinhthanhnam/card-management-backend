@@ -1,13 +1,15 @@
 package com.api.cardmanagementapp.service;
 
-
 import com.api.cardmanagementapp.model.Client;
 import com.api.cardmanagementapp.repository.ClientRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Collection;
 import java.util.Optional;
 
 @Service
@@ -25,8 +27,10 @@ public class ClientService {
         clientRepository.deleteById(id);
     }
 
-    public Collection<Client> getAllClients() {
-        return clientRepository.findAll();
+    // Phương thức phân trang lấy tất cả client
+    public Page<Client> getAllClients(int page, int size) {
+        Pageable pageable = PageRequest.of(page, size);
+        return clientRepository.findAll(pageable);
     }
 
     public Optional<Client> getClientById(int id) {

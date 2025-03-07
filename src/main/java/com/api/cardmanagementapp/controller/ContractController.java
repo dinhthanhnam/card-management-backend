@@ -1,13 +1,12 @@
 package com.api.cardmanagementapp.controller;
 
 import com.api.cardmanagementapp.model.Contract;
-import com.api.cardmanagementapp.model.Contract;
 import com.api.cardmanagementapp.service.ContractService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Collection;
 import java.util.Optional;
 
 @RestController
@@ -17,8 +16,10 @@ public class ContractController {
     private final ContractService contractService;
 
     @GetMapping
-    public ResponseEntity<Collection<Contract>> getAllContracts (@RequestParam(required = false) Integer clientId) {
-        Collection<Contract> contracts = contractService.getAllContracts();
+    public ResponseEntity<Page<Contract>> getAllContracts(
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "10") int size) {
+        Page<Contract> contracts = contractService.getAllContracts(page, size);
         return ResponseEntity.ok(contracts);
     }
 
@@ -30,16 +31,14 @@ public class ContractController {
     }
 
     @GetMapping("/client/{clientId}")
-    public ResponseEntity<Collection<Contract>> getContractsByClientId(@PathVariable int clientId) {
-        Collection<Contract> contracts = contractService.getContractsByClientId(clientId);
-
+    public ResponseEntity<Page<Contract>> getContractsByClientId(
+            @PathVariable int clientId,
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "10") int size) {
+        Page<Contract> contracts = contractService.getContractsByClientId(clientId, page, size);
         if (contracts.isEmpty()) {
             return ResponseEntity.noContent().build(); // 204 nếu không có hợp đồng nào
         }
-
-        return ResponseEntity.ok(contracts); // 200 + danh sách hợp đồng
+        return ResponseEntity.ok(contracts); // 200 + danh sách hợp đồng phân trang
     }
-
-
 }
-

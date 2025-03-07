@@ -11,7 +11,6 @@ import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor
-
 public class AuthenticationService {
 
     private final UserRepository userRepository;
@@ -27,9 +26,13 @@ public class AuthenticationService {
                 .role(User.Role.USER)
                 .build();
         userRepository.save(user);
-        var jwtToken = jwtService.generateToken(user);
+
+        var accessToken = jwtService.generateToken(user);
+        var refreshToken = jwtService.generateRefreshToken(user); // 🔹 Thêm Refresh Token
+
         return AuthenticationResponse.builder()
-                .token(jwtToken)
+                .accessToken(accessToken)
+                .refreshToken(refreshToken) // 🔹 Trả về Refresh Token
                 .build();
     }
 
@@ -42,9 +45,38 @@ public class AuthenticationService {
         );
         var user = userRepository.findByEmail(request.getEmail())
                 .orElseThrow();
-        var jwtToken = jwtService.generateToken(user);
+
+        var accessToken = jwtService.generateToken(user);
+        var refreshToken = jwtService.generateRefreshToken(user); // 🔹 Thêm Refresh Token
+
         return AuthenticationResponse.builder()
-                .token(jwtToken)
+                .accessToken(accessToken)
+                .refreshToken(refreshToken) // 🔹 Trả về Refresh Token
+                .build();
+    }
+
+    public AuthenticationResponse refreshToken(RefreshTokenRequest request) {
+        String refreshToken = request.getRefreshToken();
+        String username = jwtService.extractUsername(refreshToken);
+
+        var user = userRepository.findByEmail(username).orElseThrow();
+
+        if (jwtService.isTokenValid(refreshToken, user)) {
+            var newAccessToken = jwtService.generateToken(user);
+            return AuthenticationResponse.builder()
+                    .accessToken(newAccessToken)
+                    .refreshToken(refreshToken)
+                    .build();
+        }
+        throw new RuntimeException("Invalid refresh token");
+    }
+
+    public UserResponse getCurrentUser(User user) {
+        return UserResponse.builder()
+                .id(user.getId())
+                .name(user.getName())
+                .email(user.getEmail())
+                .role(user.getRole())
                 .build();
     }
 }

@@ -16,6 +16,7 @@ import java.util.function.Function;
 @Service
 public class JwtService {
     private static final String SECRET_KEY = "ko59K2mtVYzOhblzDR5bbVrsr96IdfEuSiBSyzTzGJB3xxVis/dTSX5cHGtULPW3"; // Thay bằng khóa bí mật thực tế
+    private static final long EXPIRATION_TIME_REFRESH = 1000 * 60 * 60 * 24 * 7;
     private static final long EXPIRATION_TIME = 1000 * 60 * 60 * 24;
 
     private SecretKey getSigningKey() {
@@ -28,18 +29,23 @@ public class JwtService {
     }
 
     public String generateToken(UserDetails userDetails) {
-        return generateToken(new HashMap<>(), userDetails);
+        return generateToken(new HashMap<>(), userDetails, EXPIRATION_TIME);
     }
 
-    public String generateToken(Map<String, Object> extraClaims, UserDetails userDetails) {
+    public String generateRefreshToken(UserDetails userDetails) {
+        return generateToken(new HashMap<>(), userDetails, EXPIRATION_TIME_REFRESH); // 7 ngày
+    }
+
+    public String generateToken(Map<String, Object> extraClaims, UserDetails userDetails, long expirationTime) {
         return Jwts.builder()
-                .claims(extraClaims) // Thêm claims tùy chỉnh
-                .subject(userDetails.getUsername()) // Đặt subject là username
-                .issuedAt(new Date(System.currentTimeMillis())) // Ngày tạo token
-                .expiration(new Date(System.currentTimeMillis() + EXPIRATION_TIME)) // Hết hạn sau 24 giờ
-                .signWith(getSigningKey()) // Ký bằng HMAC SHA256
+                .claims(extraClaims)
+                .subject(userDetails.getUsername())
+                .issuedAt(new Date(System.currentTimeMillis()))
+                .expiration(new Date(System.currentTimeMillis() + expirationTime))
+                .signWith(getSigningKey())
                 .compact();
     }
+
 
     public boolean isTokenValid(String token, UserDetails userDetails) {
         final String username = extractUsername(token);

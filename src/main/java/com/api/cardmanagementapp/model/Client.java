@@ -27,19 +27,19 @@ public class Client {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    @Column(nullable = false)
+    @Column
     private String firstName;
 
-    @Column(nullable = false)
+    @Column
     private String lastName;
 
-    @Column(nullable = false, unique = true)
+    @Column(unique = true)
     private String email;
 
-    @Column(nullable = false, unique = true)
+    @Column(unique = true)
     private String phone;
 
-    @Column(nullable = false, unique = true)
+    @Column(unique = true)
     private String identityNumber;
 
     @Column
@@ -51,33 +51,6 @@ public class Client {
     @OneToMany(mappedBy = "client", cascade = CascadeType.ALL)
     @JsonBackReference
     private List<Contract> contracts;
-
-    @Column
-    private String reasonCode; // Mã lý do (có thể là lý do mở tài khoản, từ chối, v.v.)
-
-    @Column
-    private String reason; // Chi tiết lý do
-
-    @Column
-    private String clientTypeCode; // Mã loại khách hàng (Cá nhân, Doanh nghiệp, Đối tác, v.v.)
-
-    @Column
-    private String institutionCode; // Mã tổ chức khách hàng thuộc về
-
-    @Column
-    private String branch; // Chi nhánh giao dịch của khách hàng
-
-    @Column
-    private String clientCategory; // Phân loại khách hàng theo tiêu chí ngân hàng
-
-    @Column
-    private String productCategory; // Phân loại khách hàng theo sản phẩm đăng ký
-
-    @Column
-    private String companyName; // Nếu khách hàng là doanh nghiệp, đây là tên công ty
-
-    @Column
-    private String shortName; // Tên viết tắt của công ty hoặc biệt danh của khách hàng
 
     @Column
     private String clientNumber;

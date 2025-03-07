@@ -32,7 +32,8 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
     ) throws ServletException, IOException {
 
         final String requestURI = request.getRequestURI();
-        System.out.println("Request to: " + requestURI);
+        final String queryString = request.getQueryString(); // Lấy query params
+        System.out.println("Request to: " + requestURI + (queryString != null ? "?" + queryString : ""));
 
         final String authHeader = request.getHeader("Authorization");
 
