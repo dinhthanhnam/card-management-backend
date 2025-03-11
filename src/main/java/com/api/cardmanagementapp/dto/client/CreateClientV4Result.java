@@ -13,8 +13,8 @@ public class CreateClientV4Result {
     @XmlElement(name = "NewClient", namespace = "http://www.openwaygroup.com/wsint")
     private String newClient;
 
-    @XmlElement(name = "ApplicationName", namespace = "http://www.openwaygroup.com/wsint")
-    private String applicationName;
+    @XmlElement(name = "ApplicationNumber", namespace = "http://www.openwaygroup.com/wsint")
+    private String applicationNumber;
 
     @XmlElement(name = "RetCode", namespace = "http://www.openwaygroup.com/wsint")
     private String retCode;

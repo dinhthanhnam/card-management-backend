@@ -23,6 +23,7 @@ public class CreateClientV4 {
     @XmlElement(name = "CreateClient_InObject", namespace = "http://www.openwaygroup.com/wsint")
     private CreateClientInObject createClientInObject;
 
+    @XmlElement(name = "SetCustomData_InObject", namespace = "http://www.openwaygroup.com/wsint")
     List<SetCustomDataInObject> setCustomDataInObjects;
 
     // Không cần tự viết getter/setter, để Lombok xử lý
