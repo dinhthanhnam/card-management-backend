@@ -29,6 +29,14 @@ public class XmlLoggingInterceptor implements ClientInterceptor {
 
     @Override
     public boolean handleResponse(MessageContext messageContext) throws WebServiceClientException {
+        try {
+            ByteArrayOutputStream out = new ByteArrayOutputStream();
+            messageContext.getResponse().writeTo(out);
+            String xmlResponse = out.toString("UTF-8");
+            logger.info("Response XML: \n{}", xmlResponse);
+        } catch (IOException e) {
+            logger.error("Lỗi khi log response XML: {}", e.getMessage(), e);
+        }
         return true; // Không log response ở đây, chỉ log request
     }
 

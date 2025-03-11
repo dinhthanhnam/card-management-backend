@@ -5,8 +5,12 @@ import com.api.cardmanagementapp.dto.client.CreateClientV4Response;
 import com.api.cardmanagementapp.dto.client.CreateClientV4Result;
 import com.api.cardmanagementapp.service.ClientService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.HashMap;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/api/v1/clients")
@@ -16,24 +20,35 @@ public class ClientController {
     private final ClientService clientService;
 
     @PostMapping("/create")
-    public ResponseEntity<?> createClient(@RequestBody CreateClientV4 createClientV4) {
-        // Gửi request và nhận response từ SOAP service
-        CreateClientV4Response response = clientService.sendCreateClientRequest(createClientV4);
+    public ResponseEntity<?> createClient(
+            @RequestBody CreateClientV4 createClientV4,
+            @RequestHeader("X-SessionContextStr") String sessionContextStr,
+            @RequestHeader("X-UserInfo") String userInfo,
+            @RequestHeader("X-CorrelationId") String correlationId) {
 
-        // Kiểm tra response hợp lệ và xử lý kết quả
-        if (response != null && response.getCreateClientV4Result() != null) {
-            CreateClientV4Result result = response.getCreateClientV4Result();
+        CreateClientV4Response soapResponse = clientService.sendCreateClientRequest(
+                createClientV4, sessionContextStr, userInfo, correlationId);
 
-            // Giả sử RetCode "0" nghĩa là thành công
+        Map<String, Object> responseBody = new HashMap<>();
+        if (soapResponse != null && soapResponse.getCreateClientV4Result() != null) {
+            CreateClientV4Result result = soapResponse.getCreateClientV4Result();
             if ("0".equals(result.getRetCode())) {
-                String successMessage = "Client created successfully. NewClient: " + result.getNewClient()
-                        + ", ApplicationNumber: " + result.getApplicationNumber();
-                return ResponseEntity.ok(successMessage);
+                responseBody.put("statusCode", HttpStatus.OK.value());
+                responseBody.put("success", true);
+                responseBody.put("message", "Client created successfully. NewClient: "
+                        + result.getNewClient() + ", ApplicationNumber: " + result.getApplicationNumber());
+                responseBody.put("data", result);
+                return ResponseEntity.ok(responseBody);
             } else {
-                String errorMessage = "Error creating client: " + result.getRetMsg();
-                return ResponseEntity.badRequest().body(errorMessage);
+                responseBody.put("statusCode", HttpStatus.BAD_REQUEST.value());
+                responseBody.put("success", false);
+                responseBody.put("message", "Error creating client: " + result.getRetMsg());
+                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(responseBody);
             }
         }
-        return ResponseEntity.status(500).body("Invalid or empty response received from SOAP service.");
+        responseBody.put("statusCode", HttpStatus.INTERNAL_SERVER_ERROR.value());
+        responseBody.put("success", false);
+        responseBody.put("message", "Invalid response received from SOAP service.");
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(responseBody);
     }
 }

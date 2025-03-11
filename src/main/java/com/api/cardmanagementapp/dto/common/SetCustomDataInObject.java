@@ -1,5 +1,6 @@
 package com.api.cardmanagementapp.dto.common;
 
+import com.api.cardmanagementapp.constant.NamespaceConstants;
 import jakarta.xml.bind.annotation.XmlAccessType;
 import jakarta.xml.bind.annotation.XmlAccessorType;
 import jakarta.xml.bind.annotation.XmlElement;

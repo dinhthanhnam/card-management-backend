@@ -1,12 +1,17 @@
 package com.api.cardmanagementapp.dto.client;
 
+import com.api.cardmanagementapp.constant.NamespaceConstants;
 import jakarta.xml.bind.annotation.XmlAccessType;
 import jakarta.xml.bind.annotation.XmlAccessorType;
 import jakarta.xml.bind.annotation.XmlElement;
 import jakarta.xml.bind.annotation.XmlRootElement;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Data
+@NoArgsConstructor
+@AllArgsConstructor
 @XmlRootElement(name = "CreateClientV4Result", namespace = "http://www.openwaygroup.com/wsint")
 @XmlAccessorType(XmlAccessType.FIELD)
 public class CreateClientV4Result {
