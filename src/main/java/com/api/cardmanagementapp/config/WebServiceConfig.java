@@ -14,7 +14,13 @@ public class WebServiceConfig {
     @Bean
     public Jaxb2Marshaller marshaller() {
         Jaxb2Marshaller marshaller = new Jaxb2Marshaller();
-        marshaller.setPackagesToScan("com.api.cardmanagementapp.dto.client"); // Quét package
+        marshaller.setPackagesToScan(
+                "com.api.cardmanagementapp.dto.client",
+                "com.api.cardmanagementapp.dto.common",
+                "com.api.cardmanagementapp.dto.contract",
+                "com.api.cardmanagementapp.dto.card",
+                "com.api.cardmanagementapp.dto.issuing"
+                ); // Quét package
         return marshaller;
     }
 
