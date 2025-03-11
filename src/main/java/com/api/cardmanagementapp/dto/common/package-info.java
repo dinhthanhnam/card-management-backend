@@ -6,4 +6,4 @@
                 @jakarta.xml.bind.annotation.XmlNs(prefix = "wsin", namespaceURI = "http://www.openwaygroup.com/wsint")
         }
 )
-package com.api.cardmanagementapp.dto;
+package com.api.cardmanagementapp.dto.common;

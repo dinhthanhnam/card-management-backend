@@ -13,12 +13,12 @@ import lombok.NoArgsConstructor;
 @XmlRootElement(name = "SetCustomData_InObject", namespace = "http://www.openwaygroup.com/wsint")
 @XmlAccessorType(XmlAccessType.FIELD)
 public class SetCustomDataInObject {
-    @XmlElement
+    @XmlElement(name = "AddInfoType", namespace = "http://www.openwaygroup.com/wsint")
     private String addInfoType;
 
-    @XmlElement
+    @XmlElement(name = "TagName", namespace = "http://www.openwaygroup.com/wsint")
     private String tagName;
 
-    @XmlElement
+    @XmlElement(name = "TagValue", namespace = "http://www.openwaygroup.com/wsint")
     private String tagValue;
 }
