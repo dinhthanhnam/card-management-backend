@@ -1,39 +1,62 @@
 package com.api.cardmanagementapp.service;
 
-import com.api.cardmanagementapp.model.Client;
-import com.api.cardmanagementapp.repository.ClientRepository;
+import com.api.cardmanagementapp.dto.common.*;
+import com.api.cardmanagementapp.dto.client.CreateClientInObject;
+import com.api.cardmanagementapp.dto.client.CreateClientV4;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
-import org.springframework.http.ResponseEntity;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
+import org.springframework.ws.client.core.WebServiceTemplate;
 
-import java.util.Optional;
+import java.util.ArrayList;
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
 public class ClientService {
-    private final ClientRepository clientRepository;
 
-    @Transactional
-    public Client createClient(Client client) {
-        return clientRepository.save(client);
-    }
+    private final WebServiceTemplate webServiceTemplate;
 
-    @Transactional
-    public void deleteClientById(int id) {
-        clientRepository.deleteById(id);
-    }
+    public void sendCreateClientRequest(CreateClientInObject clientInObject) {
+        // Tạo SoapHeader bằng builder
+        SoapHeader header = SoapHeader.builder()
+                .sessionContextStr("?")
+                .userInfo("officer=\"WX_ADMIN\"")
+                .correlationId("?")
+                .build();
 
-    // Phương thức phân trang lấy tất cả client
-    public Page<Client> getAllClients(int page, int size) {
-        Pageable pageable = PageRequest.of(page, size);
-        return clientRepository.findAll(pageable);
-    }
+        // Tạo SetCustomDataInObject bằng builder
+        SetCustomDataInObject customData1 = SetCustomDataInObject.builder()
+                .addInfoType("AddInfo01")
+                .tagName("PrevID_01")
+                .tagValue("A1")
+                .build();
 
-    public Optional<Client> getClientById(int id) {
-        return clientRepository.findById(id);
+        SetCustomDataInObject customData2 = SetCustomDataInObject.builder()
+                .addInfoType("AddInfo01")
+                .tagName("PrevID_02")
+                .tagValue("A2")
+                .build();
+
+        // Tạo CreateClientV4 bằng builder
+        CreateClientV4 createClientV4 = CreateClientV4.builder()
+                .reason("Create client")
+                .createClientInObject(clientInObject)
+                .setCustomDataInObjects(List.of(customData1, customData2))
+                .build();
+
+        // Tạo SoapBody bằng builder
+        SoapBody body = SoapBody.builder()
+                .createClientV4(createClientV4)
+                .build();
+
+        // Tạo SoapEnvelope bằng builder
+        SoapEnvelope requestEnvelope = SoapEnvelope.builder()
+                .header(header)
+                .body(body)
+                .build();
+
+        // Gửi request qua WebServiceTemplate
+        webServiceTemplate.marshalSendAndReceive(requestEnvelope);
     }
 }
