@@ -1,10 +1,11 @@
 package com.api.cardmanagementapp.dto.common;
 
 import jakarta.xml.bind.annotation.*;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
-@Builder
 @Data
 @XmlRootElement(name = "Header", namespace = "http://schemas.xmlsoap.org/soap/envelope/")
 @XmlAccessorType(XmlAccessType.FIELD)
