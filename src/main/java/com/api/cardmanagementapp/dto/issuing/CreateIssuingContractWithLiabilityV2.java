@@ -20,6 +20,21 @@ public class CreateIssuingContractWithLiabilityV2 {
     @XmlElement(name = "LiabContractIdentifier", namespace = "http://www.openwaygroup.com/wsint")
     private String liabContractIdentifier;
 
+    @XmlElement(name = "ClientSearchMethod", namespace = NamespaceConstants.WSINT_NS)
+    private String clientSearchMethod;
+
+    @XmlElement(name = "ClientIdentifier", namespace = NamespaceConstants.WSINT_NS)
+    private String clientIdentifier;
+
+    @XmlElement(name = "ProductCode", namespace = NamespaceConstants.WSINT_NS)
+    private String productCode;
+
+    @XmlElement(name = "ProductCode2", namespace = NamespaceConstants.WSINT_NS)
+    private String productCode2;
+
+    @XmlElement(name = "ProductCode3", namespace = NamespaceConstants.WSINT_NS)
+    private String productCode3;
+
     @XmlElement(name = "InObject", namespace = "http://www.openwaygroup.com/wsint")
     private CreateIssuingInObject createIssuingInObject;
 }
