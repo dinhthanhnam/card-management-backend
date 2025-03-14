@@ -37,7 +37,6 @@ public class DatabaseSeeder implements ApplicationRunner {
         userRepository.saveAll(users);
 
         System.out.println("✅ Seed dữ liệu user thành công!");
-        System.out.println("Seed card thanh cong");
     }
 }
 

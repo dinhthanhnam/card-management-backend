@@ -2,8 +2,6 @@ package com.api.cardmanagementapp.service;
 
 import com.api.cardmanagementapp.dto.card.CreateCardV3;
 import com.api.cardmanagementapp.dto.card.CreateCardV3Response;
-import com.api.cardmanagementapp.dto.contract.CreateContractV4;
-import com.api.cardmanagementapp.dto.contract.CreateContractV4Response;
 import com.api.cardmanagementapp.interceptor.SoapHeaderInterceptor;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;

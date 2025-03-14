@@ -7,14 +7,14 @@
     <SOAP-ENV:Body>
         <ns2:CreateContractV4 xmlns:ns2="http://www.openwaygroup.com/wsint">
             <ns2:ClientSearchMethod>CLIENT_NUMBER</ns2:ClientSearchMethod>
-            <ns2:ClientIdentifier>1111233344445</ns2:ClientIdentifier>
-            <ns2:Reason>test create contract</ns2:Reason>
+            <ns2:ClientIdentifier>888888</ns2:ClientIdentifier>
+            <ns2:Reason>to test</ns2:Reason>
             <ns2:CreateContract_InObject>
                 <ns2:Branch>0101</ns2:Branch>
                 <ns2:InstitutionCode>0001</ns2:InstitutionCode>
-                <ns2:ProductCode>ISS_CR_P_LIB</ns2:ProductCode>
+                <ns2:ProductCode>RETAIL_ACC</ns2:ProductCode>
                 <ns2:ContractName>Liability Contract</ns2:ContractName>
-                <ns2:CBSNumber>2222344322</ns2:CBSNumber>
+                <ns2:CBSNumber>0981231232</ns2:CBSNumber>
             </ns2:CreateContract_InObject>
             <ns2:SetCustomData_InObject>
                 <ns2:AddInfoType>AddInfo01</ns2:AddInfoType>
