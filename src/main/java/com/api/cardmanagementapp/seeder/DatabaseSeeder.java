@@ -1,7 +1,7 @@
 package com.api.cardmanagementapp.seeder;
 
-import com.api.cardmanagementapp.model.*;
-import com.api.cardmanagementapp.repository.UserRepository;
+import com.api.cardmanagementapp.model.auth.User;
+import com.api.cardmanagementapp.repository.auth.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.ApplicationRunner;
 import org.springframework.boot.ApplicationArguments;

@@ -1,6 +1,6 @@
 package com.api.cardmanagementapp.config;
 
-import com.api.cardmanagementapp.repository.UserRepository;
+import com.api.cardmanagementapp.repository.auth.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

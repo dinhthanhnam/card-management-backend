@@ -3,13 +3,16 @@ package com.api.cardmanagementapp.controller;
 import com.api.cardmanagementapp.dto.client.CreateClientV4;
 import com.api.cardmanagementapp.dto.client.CreateClientV4Response;
 import com.api.cardmanagementapp.dto.client.CreateClientV4Result;
+import com.api.cardmanagementapp.model.Client;
 import com.api.cardmanagementapp.service.ClientService;
+import com.api.cardmanagementapp.service.OracleQueryService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @RestController
@@ -18,6 +21,17 @@ import java.util.Map;
 public class ClientController {
 
     private final ClientService clientService;
+    private final OracleQueryService oracleQueryService;
+
+    @GetMapping
+    public List<Client> getAllClients() {
+      return oracleQueryService.getClientData();
+    }
+
+    @GetMapping("/{id}")
+    public Client getClientById(@PathVariable Long id) {
+        return oracleQueryService.getClientById(id);
+    }
 
     @PostMapping("/create")
     public ResponseEntity<?> createClient(

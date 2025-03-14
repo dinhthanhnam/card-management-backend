@@ -1,8 +1,8 @@
 package com.api.cardmanagementapp.auth;
 
 import com.api.cardmanagementapp.service.JwtService;
-import com.api.cardmanagementapp.model.User;
-import com.api.cardmanagementapp.repository.UserRepository;
+import com.api.cardmanagementapp.model.auth.User;
+import com.api.cardmanagementapp.repository.auth.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;

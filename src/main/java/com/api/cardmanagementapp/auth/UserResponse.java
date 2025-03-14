@@ -1,5 +1,5 @@
 package com.api.cardmanagementapp.auth;
-import com.api.cardmanagementapp.model.User;
+import com.api.cardmanagementapp.model.auth.User;
 import lombok.Builder;
 import lombok.Data;
 

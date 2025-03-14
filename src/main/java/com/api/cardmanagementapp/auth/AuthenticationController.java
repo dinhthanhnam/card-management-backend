@@ -1,6 +1,6 @@
 package com.api.cardmanagementapp.auth;
 
-import com.api.cardmanagementapp.model.User;
+import com.api.cardmanagementapp.model.auth.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;

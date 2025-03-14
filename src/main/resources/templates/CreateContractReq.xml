@@ -5,22 +5,41 @@
         <CorrelationId xmlns="http://www.openwaygroup.com/wsint">?</CorrelationId>
     </SOAP-ENV:Header>
     <SOAP-ENV:Body>
-        <ns2:CreateContractV4 xmlns:ns2="http://www.openwaygroup.com/wsint">
-            <ns2:ClientSearchMethod>CLIENT_NUMBER</ns2:ClientSearchMethod>
-            <ns2:ClientIdentifier>888888</ns2:ClientIdentifier>
-            <ns2:Reason>to test</ns2:Reason>
-            <ns2:CreateContract_InObject>
-                <ns2:Branch>0101</ns2:Branch>
-                <ns2:InstitutionCode>0001</ns2:InstitutionCode>
-                <ns2:ProductCode>RETAIL_ACC</ns2:ProductCode>
-                <ns2:ContractName>Liability Contract</ns2:ContractName>
-                <ns2:CBSNumber>0981231232</ns2:CBSNumber>
-            </ns2:CreateContract_InObject>
+        <ns2:CreateClientV4 xmlns:ns2="http://www.openwaygroup.com/wsint">
+            <ns2:Reason>Create client</ns2:Reason>
+            <ns2:CreateClient_InObject>
+                <ns2:InstitutionCode>9999</ns2:InstitutionCode>
+                <ns2:Branch>9999</ns2:Branch>
+                <ns2:ClientTypeCode>PR</ns2:ClientTypeCode>
+                <ns2:ShortName>Dinh Thanh Nam</ns2:ShortName>
+                <ns2:FirstName>Nam</ns2:FirstName>
+                <ns2:LastName>Dinh</ns2:LastName>
+                <ns2:MiddleName>Thanh</ns2:MiddleName>
+                <ns2:MaritalStatusCode>D</ns2:MaritalStatusCode>
+                <ns2:SocialSecurityNumber>09823173131</ns2:SocialSecurityNumber>
+                <ns2:SalutationCode>MR</ns2:SalutationCode>
+                <ns2:BirthDate>2000-03-12</ns2:BirthDate>
+                <ns2:Gender>M</ns2:Gender>
+                <ns2:Citizenship>VNM</ns2:Citizenship>
+                <ns2:IndividualTaxpayerNumber>01298312381</ns2:IndividualTaxpayerNumber>
+                <ns2:CompanyName>OpenWay</ns2:CompanyName>
+                <ns2:EmbossedFirstName>abc</ns2:EmbossedFirstName>
+                <ns2:EmbossedLastName>abc</ns2:EmbossedLastName>
+                <ns2:EmbossedCompanyName>ABC</ns2:EmbossedCompanyName>
+                <ns2:IdentityCardNumber>97427891371</ns2:IdentityCardNumber>
+                <ns2:IdentityCardDetails>02173197104</ns2:IdentityCardDetails>
+                <ns2:ClientNumber>123412341234</ns2:ClientNumber>
+                <ns2:Profession>Thu Ky</ns2:Profession>
+                <ns2:AddressLine1>Au Co</ns2:AddressLine1>
+                <ns2:City>HaNoi</ns2:City>
+                <ns2:HomePhone>0875433001</ns2:HomePhone>
+                <ns2:MobilePhone>087543002</ns2:MobilePhone>
+            </ns2:CreateClient_InObject>
             <ns2:SetCustomData_InObject>
                 <ns2:AddInfoType>AddInfo01</ns2:AddInfoType>
                 <ns2:TagName>PrevID_01</ns2:TagName>
                 <ns2:TagValue>A1</ns2:TagValue>
             </ns2:SetCustomData_InObject>
-        </ns2:CreateContractV4>
+        </ns2:CreateClientV4>
     </SOAP-ENV:Body>
 </SOAP-ENV:Envelope>
