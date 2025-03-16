@@ -1,6 +1,7 @@
 package com.api.cardmanagementapp.service;
 
 import com.api.cardmanagementapp.model.Client;
+import com.api.cardmanagementapp.model.PagedClientResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -18,15 +19,36 @@ public class OracleQueryService {
         this.oracleJdbcTemplate = oracleJdbcTemplate;
     }
 
-    public List<Client> getClientData() {
-        String sql = "SELECT id, client_number, reg_number FROM client";
-        return oracleJdbcTemplate.query(sql, (rs, rowNum) ->
-                new Client(
+    public PagedClientResponse getPagedClientData(int page, int size) {
+        int offset = page * size;
+
+        // Đếm tổng số bản ghi
+        String countSql = "SELECT COUNT(*) FROM client";
+        long totalElements = oracleJdbcTemplate.queryForObject(countSql, Long.class);
+
+        // Lấy danh sách phân trang
+        String sql = "SELECT id, client_number, reg_number FROM client " +
+                "ORDER BY id " +
+                "OFFSET ? ROWS FETCH NEXT ? ROWS ONLY";
+        List<Client> clients = oracleJdbcTemplate.query(
+                sql,
+                new Object[]{offset, size},
+                (rs, rowNum) -> new Client(
                         rs.getLong("id"),
                         rs.getString("client_number"),
                         rs.getString("reg_number")
                 )
         );
+
+        // Tạo response
+        PagedClientResponse response = new PagedClientResponse();
+        response.setClients(clients);
+        response.setPage(page);
+        response.setSize(size);
+        response.setTotalElements(totalElements);
+        response.setTotalPages((int) Math.ceil((double) totalElements / size));
+
+        return response;
     }
 
     public Client getClientById(Long id) {

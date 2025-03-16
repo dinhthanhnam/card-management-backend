@@ -7,6 +7,7 @@ import com.api.cardmanagementapp.dto.client.edit.EditClientV6;
 import com.api.cardmanagementapp.dto.client.edit.EditClientV6Response;
 import com.api.cardmanagementapp.dto.client.edit.EditClientV6Result;
 import com.api.cardmanagementapp.model.Client;
+import com.api.cardmanagementapp.model.PagedClientResponse;
 import com.api.cardmanagementapp.service.ClientService;
 import com.api.cardmanagementapp.service.OracleQueryService;
 import lombok.RequiredArgsConstructor;
@@ -26,9 +27,12 @@ public class ClientController {
     private final ClientService clientService;
     private final OracleQueryService oracleQueryService;
 
-    @GetMapping
-    public List<Client> getAllClients() {
-      return oracleQueryService.getClientData();
+    @GetMapping("/clients")
+    public ResponseEntity<PagedClientResponse> getAllClients(
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "10") int size) {
+        PagedClientResponse response = oracleQueryService.getPagedClientData(page, size);
+        return ResponseEntity.ok(response);
     }
 
     @GetMapping("/{id}")

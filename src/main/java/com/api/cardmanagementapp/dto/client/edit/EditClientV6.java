@@ -1,6 +1,7 @@
 package com.api.cardmanagementapp.dto.client.edit;
 
 import com.api.cardmanagementapp.constant.NamespaceConstants;
+import com.api.cardmanagementapp.dto.common.SetCustomDataInObject;
 import jakarta.xml.bind.annotation.XmlAccessType;
 import jakarta.xml.bind.annotation.XmlAccessorType;
 import jakarta.xml.bind.annotation.XmlElement;
@@ -20,6 +21,9 @@ public class EditClientV6 {
     @XmlElement(name = "Reason", namespace = NamespaceConstants.WSINT_NS)
     private String reason;
 
-    @XmlElement(name = "EditClientInObject", namespace = NamespaceConstants.WSINT_NS)
+    @XmlElement(name = "EditClient_InObject", namespace = NamespaceConstants.WSINT_NS)
     private EditClientInObject editClientInObject;
+
+    @XmlElement(name = "SetCustomData_InObject", namespace = NamespaceConstants.WSINT_NS)
+    private SetCustomDataInObject setCustomDataInObjects;
 }
