@@ -12,12 +12,6 @@ import lombok.Data;
 @XmlRootElement(name = "GetContractByNumberV2Response", namespace = NamespaceConstants.WSINT_NS)
 @XmlAccessorType(XmlAccessType.FIELD)
 public class GetContractByNumberV2Response {
-    @XmlElement(name = "RetCode", namespace = NamespaceConstants.WSINT_NS)
-    private String retCode;
-
-    @XmlElement(name = "ResultInfo", namespace = NamespaceConstants.WSINT_NS)
-    private String resultInfo;
-
-    @XmlElement(name = "OutObject", namespace = NamespaceConstants.WSINT_NS)
-    private OutObject outObject;
+    @XmlElement(name = "GetContractByNumberV2Result", namespace = NamespaceConstants.WSINT_NS)
+    private GetContractByNumberV2Result getContractByNumberV2Result;
 }
