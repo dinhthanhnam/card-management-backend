@@ -1,8 +1,8 @@
 package com.api.cardmanagementapp.controller;
 
-import com.api.cardmanagementapp.dto.contract.CreateContractV4;
-import com.api.cardmanagementapp.dto.contract.CreateContractV4Response;
-import com.api.cardmanagementapp.dto.contract.CreateContractV4Result;
+import com.api.cardmanagementapp.dto.contract.create.CreateContractV4;
+import com.api.cardmanagementapp.dto.contract.create.CreateContractV4Response;
+import com.api.cardmanagementapp.dto.contract.create.CreateContractV4Result;
 import com.api.cardmanagementapp.dto.issuing.CreateIssuingContractWithLiabilityV2;
 import com.api.cardmanagementapp.dto.issuing.CreateIssuingContractWithLiabilityV2Response;
 import com.api.cardmanagementapp.dto.issuing.CreateIssuingContractWithLiabilityV2Result;

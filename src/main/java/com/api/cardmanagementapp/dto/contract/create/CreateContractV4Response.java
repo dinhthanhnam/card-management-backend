@@ -1,6 +1,5 @@
-package com.api.cardmanagementapp.dto.contract;
+package com.api.cardmanagementapp.dto.contract.create;
 
-import com.api.cardmanagementapp.constant.NamespaceConstants;
 import jakarta.xml.bind.annotation.XmlAccessType;
 import jakarta.xml.bind.annotation.XmlAccessorType;
 import jakarta.xml.bind.annotation.XmlElement;

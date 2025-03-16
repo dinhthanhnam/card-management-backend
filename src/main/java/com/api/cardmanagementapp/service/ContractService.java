@@ -1,7 +1,7 @@
 package com.api.cardmanagementapp.service;
 
-import com.api.cardmanagementapp.dto.contract.CreateContractV4;
-import com.api.cardmanagementapp.dto.contract.CreateContractV4Response;
+import com.api.cardmanagementapp.dto.contract.create.CreateContractV4;
+import com.api.cardmanagementapp.dto.contract.create.CreateContractV4Response;
 import com.api.cardmanagementapp.dto.issuing.CreateIssuingContractWithLiabilityV2;
 import com.api.cardmanagementapp.dto.issuing.CreateIssuingContractWithLiabilityV2Response;
 import com.api.cardmanagementapp.interceptor.SoapHeaderInterceptor;
