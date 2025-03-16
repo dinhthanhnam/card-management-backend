@@ -8,6 +8,8 @@ import jakarta.xml.bind.annotation.XmlElement;
 import jakarta.xml.bind.annotation.XmlRootElement;
 import lombok.Data;
 
+import java.util.List;
+
 @Data
 @XmlRootElement(name = "EditClientV6", namespace = NamespaceConstants.WSINT_NS)
 @XmlAccessorType(XmlAccessType.FIELD)
@@ -25,5 +27,5 @@ public class EditClientV6 {
     private EditClientInObject editClientInObject;
 
     @XmlElement(name = "SetCustomData_InObject", namespace = NamespaceConstants.WSINT_NS)
-    private SetCustomDataInObject setCustomDataInObjects;
+    private List<SetCustomDataInObject> setCustomDataInObjects;
 }

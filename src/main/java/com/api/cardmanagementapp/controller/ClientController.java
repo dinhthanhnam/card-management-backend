@@ -73,7 +73,7 @@ public class ClientController {
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(responseBody);
     }
 
-    @PostMapping("/edit")
+    @PutMapping("/edit")
     public ResponseEntity<?> editClient(
             @RequestBody EditClientV6 editClientV6,
             @RequestHeader("X-SessionContextStr") String sessionContextStr,
