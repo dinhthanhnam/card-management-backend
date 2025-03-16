@@ -27,7 +27,7 @@ public class OracleQueryService {
         long totalElements = oracleJdbcTemplate.queryForObject(countSql, Long.class);
 
         // Lấy danh sách phân trang
-        String sql = "SELECT id, client_number, reg_number FROM client " +
+        String sql = "SELECT id, short_name, client_number, reg_number FROM client " +
                 "ORDER BY id " +
                 "OFFSET ? ROWS FETCH NEXT ? ROWS ONLY";
         List<Client> clients = oracleJdbcTemplate.query(
@@ -35,6 +35,7 @@ public class OracleQueryService {
                 new Object[]{offset, size},
                 (rs, rowNum) -> new Client(
                         rs.getLong("id"),
+                        rs.getString("short_name"),
                         rs.getString("client_number"),
                         rs.getString("reg_number")
                 )
@@ -52,10 +53,11 @@ public class OracleQueryService {
     }
 
     public Client getClientById(Long id) {
-        String sql = "SELECT id, client_number, reg_number FROM client WHERE id = ?";
+        String sql = "SELECT id, short_name, client_number, reg_number FROM client WHERE id = ?";
         return oracleJdbcTemplate.queryForObject(sql, new Object[]{id}, (rs, rowNum) ->
                 new Client(
                         rs.getLong("id"),
+                        rs.getString("short_name"),
                         rs.getString("client_number"),
                         rs.getString("reg_number")
                 )

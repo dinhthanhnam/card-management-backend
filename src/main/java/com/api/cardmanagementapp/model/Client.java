@@ -11,6 +11,7 @@ import lombok.RequiredArgsConstructor;
 @AllArgsConstructor
 public class Client {
     private Long id;
+    private String ShortName;
     private String clientNumber;
     private String regNumber;
 }

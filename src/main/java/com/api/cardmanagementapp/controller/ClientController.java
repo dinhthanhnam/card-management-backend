@@ -27,7 +27,7 @@ public class ClientController {
     private final ClientService clientService;
     private final OracleQueryService oracleQueryService;
 
-    @GetMapping("/clients")
+    @GetMapping
     public ResponseEntity<PagedClientResponse> getAllClients(
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "10") int size) {

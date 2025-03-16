@@ -118,7 +118,7 @@ public class CreateClientInObject {
     private String profession;
 
     @XmlElement(name = "EMail", namespace = "http://www.openwaygroup.com/wsint")
-    private String eMail;
+    private String email;
 
     @XmlElement(name = "AddressLine1", namespace = "http://www.openwaygroup.com/wsint")
     private String addressLine1;
