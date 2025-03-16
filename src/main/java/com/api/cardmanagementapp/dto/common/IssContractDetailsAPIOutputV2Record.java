@@ -1,4 +1,4 @@
-package com.api.cardmanagementapp.dto.contract.get;
+package com.api.cardmanagementapp.dto.common;
 
 import com.api.cardmanagementapp.constant.NamespaceConstants;
 import jakarta.xml.bind.annotation.XmlAccessType;

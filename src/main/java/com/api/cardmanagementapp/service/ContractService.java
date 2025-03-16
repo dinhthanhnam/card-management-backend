@@ -1,7 +1,11 @@
 package com.api.cardmanagementapp.service;
 
+import com.api.cardmanagementapp.dto.client.edit.EditClientV6;
+import com.api.cardmanagementapp.dto.client.edit.EditClientV6Response;
 import com.api.cardmanagementapp.dto.contract.create.CreateContractV4;
 import com.api.cardmanagementapp.dto.contract.create.CreateContractV4Response;
+import com.api.cardmanagementapp.dto.contract.edit.EditContractV4;
+import com.api.cardmanagementapp.dto.contract.edit.EditContractV4Response;
 import com.api.cardmanagementapp.dto.issuing.CreateIssuingContractWithLiabilityV2;
 import com.api.cardmanagementapp.dto.issuing.CreateIssuingContractWithLiabilityV2Response;
 import com.api.cardmanagementapp.interceptor.SoapHeaderInterceptor;
@@ -36,6 +40,16 @@ public class ContractService {
         return (CreateIssuingContractWithLiabilityV2Response) webServiceTemplate.marshalSendAndReceive(
                 createIssuingContractWithLiabilityV2,
                 SoapHeaderInterceptor.addDefaultHeaders(sessionContextStr, userInfo, correlationId)
+        );
+    }
+
+    public EditContractV4Response sendEditContractRequest(EditContractV4 editContractV4,
+                                                          String sessionContextStr,
+                                                          String userInfo,
+                                                          String correlationId)
+    {
+        return (EditContractV4Response) webServiceTemplate.marshalSendAndReceive(
+                editContractV4, SoapHeaderInterceptor.addDefaultHeaders(sessionContextStr, userInfo, correlationId)
         );
     }
 }

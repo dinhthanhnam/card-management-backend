@@ -11,7 +11,13 @@ import lombok.Data;
 @Data
 @XmlRootElement(name = "GetContractsByClientV2Response", namespace = NamespaceConstants.WSINT_NS)
 @XmlAccessorType(XmlAccessType.FIELD)
-public class GetContractsByClientV2Response {
-    @XmlElement(name = "GetContractsByClientV2Result", namespace = NamespaceConstants.WSINT_NS)
-    private GetContractsByClientV2Result getContractsByClientV2Result;
+public class GetContractsByClientV2Result {
+    @XmlElement(name = "RetCode", namespace = NamespaceConstants.WSINT_NS)
+    private String retCode;
+
+    @XmlElement(name = "ResultInfo", namespace = NamespaceConstants.WSINT_NS)
+    private String resultInfo;
+
+    @XmlElement(name = "OutObject", namespace = NamespaceConstants.WSINT_NS)
+    private OutObject outObject;
 }

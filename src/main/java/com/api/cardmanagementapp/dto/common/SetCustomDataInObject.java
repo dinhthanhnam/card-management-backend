@@ -15,6 +15,9 @@ public class SetCustomDataInObject {
     @XmlElement(name = "AddInfoType", namespace = "http://www.openwaygroup.com/wsint")
     private String addInfoType;
 
+    @XmlElement(name = "RemoveTag", namespace = "http://www.openwaygroup.com/wsint")
+    private String removeTag;
+
     @XmlElement(name = "TagName", namespace = "http://www.openwaygroup.com/wsint")
     private String tagName;
 

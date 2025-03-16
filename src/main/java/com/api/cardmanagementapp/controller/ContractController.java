@@ -1,8 +1,14 @@
 package com.api.cardmanagementapp.controller;
 
+import com.api.cardmanagementapp.dto.client.edit.EditClientV6;
+import com.api.cardmanagementapp.dto.client.edit.EditClientV6Response;
+import com.api.cardmanagementapp.dto.client.edit.EditClientV6Result;
 import com.api.cardmanagementapp.dto.contract.create.CreateContractV4;
 import com.api.cardmanagementapp.dto.contract.create.CreateContractV4Response;
 import com.api.cardmanagementapp.dto.contract.create.CreateContractV4Result;
+import com.api.cardmanagementapp.dto.contract.edit.EditContractV4;
+import com.api.cardmanagementapp.dto.contract.edit.EditContractV4Response;
+import com.api.cardmanagementapp.dto.contract.edit.EditContractV4Result;
 import com.api.cardmanagementapp.dto.issuing.CreateIssuingContractWithLiabilityV2;
 import com.api.cardmanagementapp.dto.issuing.CreateIssuingContractWithLiabilityV2Response;
 import com.api.cardmanagementapp.dto.issuing.CreateIssuingContractWithLiabilityV2Result;
@@ -78,6 +84,38 @@ public class ContractController {
                 responseBody.put("statusCode", HttpStatus.BAD_REQUEST.value());
                 responseBody.put("success", false);
                 responseBody.put("message", "Error creating contract: " + result.getRetMsg());
+                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(responseBody);
+            }
+        }
+        responseBody.put("statusCode", HttpStatus.INTERNAL_SERVER_ERROR.value());
+        responseBody.put("success", false);
+        responseBody.put("message", "Invalid response received from SOAP service.");
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(responseBody);
+    }
+
+    @PostMapping("/edit")
+    public ResponseEntity<?> editClient(
+            @RequestBody EditContractV4 editContractV4,
+            @RequestHeader("X-SessionContextStr") String sessionContextStr,
+            @RequestHeader("X-UserInfo") String userInfo,
+            @RequestHeader("X-CorrelationId") String correlationId) {
+
+        EditContractV4Response soapResponse = contractService.sendEditContractRequest(
+                editContractV4, sessionContextStr, userInfo, correlationId);
+
+        Map<String, Object> responseBody = new HashMap<>();
+        if (soapResponse != null && soapResponse.getEditContractV4Result() != null) {
+            EditContractV4Result result = soapResponse.getEditContractV4Result();
+            if ("0".equals(result.getRetCode())) {
+                responseBody.put("statusCode", HttpStatus.OK.value());
+                responseBody.put("success", true);
+                responseBody.put("message", "Contract updated successfully");
+                responseBody.put("data", result);
+                return ResponseEntity.ok(responseBody);
+            } else {
+                responseBody.put("statusCode", HttpStatus.BAD_REQUEST.value());
+                responseBody.put("success", false);
+                responseBody.put("message", "Error editing contract: " + result.getRetMsg());
                 return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(responseBody);
             }
         }

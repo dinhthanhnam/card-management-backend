@@ -1,4 +1,4 @@
-package com.api.cardmanagementapp.dto.contract.get;
+package com.api.cardmanagementapp.dto.client.edit;
 
 import com.api.cardmanagementapp.constant.NamespaceConstants;
 import jakarta.xml.bind.annotation.XmlAccessType;
@@ -8,11 +8,9 @@ import jakarta.xml.bind.annotation.XmlRootElement;
 import lombok.Data;
 
 @Data
-@XmlRootElement(name = "OutObject", namespace = NamespaceConstants.WSINT_NS)
+@XmlRootElement(name = "EditClientV6Response", namespace = NamespaceConstants.WSINT_NS)
 @XmlAccessorType(XmlAccessType.FIELD)
-public class OutObject {
-    @XmlElement(name = "IssContractDetailsAPIOutputV2Record")
-    private IssContractDetailsAPIOutputV2Record issContractDetailsAPIOutputV2Record;
-
-
+public class EditClientV6Response {
+    @XmlElement(name = "EditClientV6Result", namespace = NamespaceConstants.WSINT_NS)
+    private EditClientV6Result editClientV6Result;
 }

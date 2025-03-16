@@ -1,6 +1,5 @@
-package com.api.cardmanagementapp.dto.client;
+package com.api.cardmanagementapp.dto.client.create;
 
-import com.api.cardmanagementapp.constant.NamespaceConstants;
 import jakarta.xml.bind.annotation.XmlAccessType;
 import jakarta.xml.bind.annotation.XmlAccessorType;
 import jakarta.xml.bind.annotation.XmlElement;
@@ -145,5 +144,4 @@ public class CreateClientInObject {
     @XmlElement(name = "BusinessPhone", namespace = "http://www.openwaygroup.com/wsint")
     private String businessPhone;
 
-    // Không cần tự viết getter/setter, để Lombok xử lý
 }
