@@ -6,6 +6,10 @@ import com.api.cardmanagementapp.dto.contract.create.CreateContractV4;
 import com.api.cardmanagementapp.dto.contract.create.CreateContractV4Response;
 import com.api.cardmanagementapp.dto.contract.edit.EditContractV4;
 import com.api.cardmanagementapp.dto.contract.edit.EditContractV4Response;
+import com.api.cardmanagementapp.dto.contract.get.GetContractByNumberV2;
+import com.api.cardmanagementapp.dto.contract.get.GetContractByNumberV2Response;
+import com.api.cardmanagementapp.dto.contract.get.GetContractsByClientV2;
+import com.api.cardmanagementapp.dto.contract.get.GetContractsByClientV2Response;
 import com.api.cardmanagementapp.dto.issuing.CreateIssuingContractWithLiabilityV2;
 import com.api.cardmanagementapp.dto.issuing.CreateIssuingContractWithLiabilityV2Response;
 import com.api.cardmanagementapp.interceptor.SoapHeaderInterceptor;
@@ -39,6 +43,30 @@ public class ContractService {
         // Gọi SOAP request và ép kiểu kết quả trả về thành CreateIssuingContractWithLiabilityV2Response
         return (CreateIssuingContractWithLiabilityV2Response) webServiceTemplate.marshalSendAndReceive(
                 createIssuingContractWithLiabilityV2,
+                SoapHeaderInterceptor.addDefaultHeaders(sessionContextStr, userInfo, correlationId)
+        );
+    }
+
+    public GetContractByNumberV2Response sendGetContractByNumberRequest(GetContractByNumberV2 getContractByNumberV2,
+                                                                        String sessionContextStr,
+                                                                        String userInfo,
+                                                                        String correlationId)
+    {
+        // Gọi SOAP request và ép kiểu kết quả trả về thành CreateIssuingContractWithLiabilityV2Response
+        return (GetContractByNumberV2Response) webServiceTemplate.marshalSendAndReceive(
+                getContractByNumberV2,
+                SoapHeaderInterceptor.addDefaultHeaders(sessionContextStr, userInfo, correlationId)
+        );
+    }
+
+    public GetContractsByClientV2Response sendGetContractsByClientRequest(GetContractsByClientV2 getContractsByClientV2,
+                                                                          String sessionContextStr,
+                                                                          String userInfo,
+                                                                          String correlationId)
+    {
+        // Gọi SOAP request và ép kiểu kết quả trả về thành CreateIssuingContractWithLiabilityV2Response
+        return (GetContractsByClientV2Response) webServiceTemplate.marshalSendAndReceive(
+                getContractsByClientV2,
                 SoapHeaderInterceptor.addDefaultHeaders(sessionContextStr, userInfo, correlationId)
         );
     }
