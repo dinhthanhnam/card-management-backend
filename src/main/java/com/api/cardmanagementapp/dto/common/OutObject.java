@@ -7,10 +7,12 @@ import jakarta.xml.bind.annotation.XmlElement;
 import jakarta.xml.bind.annotation.XmlRootElement;
 import lombok.Data;
 
+import java.util.List;
+
 @Data
 @XmlRootElement(name = "OutObject", namespace = NamespaceConstants.WSINT_NS)
 @XmlAccessorType(XmlAccessType.FIELD)
 public class OutObject {
-    @XmlElement(name = "IssContractDetailsAPIOutputV2Record")
-    private IssContractDetailsAPIOutputV2Record issContractDetailsAPIOutputV2Record;
+    @XmlElement(name = "IssContractDetailsAPIOutputV2Record", namespace = NamespaceConstants.WSINT_NS)
+    private List<IssContractDetailsAPIOutputV2Record> issContractDetailsAPIOutputV2Record;
 }

@@ -15,9 +15,6 @@ public class GetContractByNumberV2Result {
     @XmlElement(name = "RetCode", namespace = NamespaceConstants.WSINT_NS)
     private String retCode;
 
-    @XmlElement(name = "RetMsg", namespace = NamespaceConstants.WSINT_NS)
-    private String retMsg;
-
     @XmlElement(name = "ResultInfo", namespace = NamespaceConstants.WSINT_NS)
     private String resultInfo;
 

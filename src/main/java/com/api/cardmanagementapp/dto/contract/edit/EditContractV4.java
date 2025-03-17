@@ -9,6 +9,7 @@ import jakarta.xml.bind.annotation.XmlRootElement;
 import lombok.Data;
 
 import java.util.List;
+import java.util.Optional;
 
 @Data
 @XmlRootElement(name = "EditContractV4", namespace = NamespaceConstants.WSINT_NS)

@@ -11,8 +11,6 @@ import lombok.Data;
 @XmlRootElement(name = "GetContractByNumberV2", namespace = NamespaceConstants.WSINT_NS)
 @XmlAccessorType(XmlAccessType.FIELD)
 public class GetContractByNumberV2 {
-    @XmlElement(name = "ContractSearchMethod", namespace = NamespaceConstants.WSINT_NS)
-    private String contractSearchMethod;
-    @XmlElement(name = "ContractIdentifier", namespace = NamespaceConstants.WSINT_NS)
-    private String contractIdentifier;
+    @XmlElement(name = "ContractNumber", namespace = NamespaceConstants.WSINT_NS)
+    private String contractNumber;
 }
