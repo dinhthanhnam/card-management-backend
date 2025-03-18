@@ -42,7 +42,7 @@ public class ContractController {
                 responseBody.put("statusCode", HttpStatus.OK.value());
                 responseBody.put("success", true);
                 responseBody.put("message", "Contract created successfully. Created Contract: "
-                        + result.getCreatedContract() + ", ApplicationNumber: " + result.getApplicationNumber());
+                        + result.getCreatedContract() + ", ApplicationNumber: " + result.getApplicationNumber() + ", Liab Contract number: " + result.getContractNumber());
                 responseBody.put("data", result);
                 return ResponseEntity.ok(responseBody);
             } else {
@@ -75,7 +75,7 @@ public class ContractController {
                 responseBody.put("statusCode", HttpStatus.OK.value());
                 responseBody.put("success", true);
                 responseBody.put("message", "Issuing contract created successfully. Created Contract: "
-                        + result.getCreatedContract() + ", ApplicationNumber: " + result.getApplicationNumber());
+                        + result.getCreatedContract() + ", ApplicationNumber: " + result.getApplicationNumber() + ", Liab Contract number: " + result.getContractNumber());
                 responseBody.put("data", result);
                 return ResponseEntity.ok(responseBody);
             } else {
@@ -107,13 +107,13 @@ public class ContractController {
             if ("0".equals(result.getRetCode())) {
                 responseBody.put("statusCode", HttpStatus.OK.value());
                 responseBody.put("success", true);
-                responseBody.put("message", "Get contract by number successfully");
+                responseBody.put("message", "Get contract by number successfully.");
                 responseBody.put("contracts", result.getOutObject().getIssContractDetailsAPIOutputV2Record());
                 return ResponseEntity.ok(responseBody);
             } else {
                 responseBody.put("statusCode", HttpStatus.BAD_REQUEST.value());
                 responseBody.put("success", false);
-                responseBody.put("message", "Error getting contract by number.");
+                responseBody.put("message", "Error getting contract by number: " + result.getRetMsg());
                 return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(responseBody);
             }
         }
@@ -145,7 +145,7 @@ public class ContractController {
             } else {
                 responseBody.put("statusCode", HttpStatus.BAD_REQUEST.value());
                 responseBody.put("success", false);
-                responseBody.put("message", "Error getting contracts by client.");
+                responseBody.put("message", "Error getting contracts by client: " + result.getRetMsg());
                 return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(responseBody);
             }
         }

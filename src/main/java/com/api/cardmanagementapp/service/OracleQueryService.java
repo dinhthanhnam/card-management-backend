@@ -28,8 +28,10 @@ public class OracleQueryService {
 
         // Lấy danh sách phân trang
         String sql = "SELECT id, short_name, client_number, reg_number FROM client " +
-                "ORDER BY id " +
-                "OFFSET ? ROWS FETCH NEXT ? ROWS ONLY";
+                "where AMND_STATE = 'A' " +
+                "ORDER BY id DESC " +
+                "OFFSET ? ROWS FETCH NEXT ? ROWS ONLY"
+                ;
         List<Client> clients = oracleJdbcTemplate.query(
                 sql,
                 new Object[]{offset, size},

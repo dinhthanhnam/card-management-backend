@@ -17,7 +17,7 @@ public class EditContractInObject {
     @XmlElement(name = "ServiceGroup", namespace = NamespaceConstants.WSINT_NS)
     private String serviceGroup;
 
-    @XmlElement(name = "ServiceGroup", namespace = NamespaceConstants.WSINT_NS)
+    @XmlElement(name = "ContractNumber", namespace = NamespaceConstants.WSINT_NS)
     private String contractNumber;
 
     @XmlElement(name = "ContractName", namespace = NamespaceConstants.WSINT_NS)
