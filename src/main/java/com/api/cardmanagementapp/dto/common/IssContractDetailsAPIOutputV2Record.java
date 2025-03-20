@@ -99,6 +99,9 @@ public class IssContractDetailsAPIOutputV2Record {
     @XmlElement(name = "ContractLevel", namespace = NamespaceConstants.WSINT_NS)
     private String contractLevel;
 
+    @XmlElement(name = "ParentContract", namespace = NamespaceConstants.WSINT_NS)
+    private String parentContract;
+
     @XmlElement(name = "BillingContact", namespace = NamespaceConstants.WSINT_NS)
     private String billingContact;
 

@@ -10,6 +10,7 @@ import com.api.cardmanagementapp.dto.contract.get.*;
 import com.api.cardmanagementapp.dto.issuing.CreateIssuingContractWithLiabilityV2;
 import com.api.cardmanagementapp.dto.issuing.CreateIssuingContractWithLiabilityV2Response;
 import com.api.cardmanagementapp.dto.issuing.CreateIssuingContractWithLiabilityV2Result;
+import com.api.cardmanagementapp.model.Contract;
 import com.api.cardmanagementapp.service.ContractService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
