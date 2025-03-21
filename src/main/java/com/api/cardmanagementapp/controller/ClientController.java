@@ -151,20 +151,18 @@ public class ClientController {
         List<Contract> contracts = buildContractTree(records);
         return ResponseEntity.ok(contracts);
     }
-
     private List<Contract> buildContractTree(List<IssContractDetailsAPIOutputV2Record> records) {
         Map<String, Contract> contractMap = new HashMap<>();
         List<Contract> rootContracts = new ArrayList<>();
+        Map<String, List<Contract>> pendingSubContracts = new HashMap<>(); // Lưu các sub-contract chưa tìm thấy parent
 
-        // Duyệt qua từng record để ánh xạ và xây dựng cây
+        // Bước 1: Ánh xạ tất cả contract và xác định root
         for (IssContractDetailsAPIOutputV2Record record : records) {
             String contractNumber = record.getContractNumber();
-            String contractName = record.getContractName();
+            String productCode = record.getProductCode();
             String contractLevel = record.getContractLevel();
 
-            // Suy luận contractType từ contractName hoặc contractCategory
-            String contractType = inferContractType(contractName, record.getContractCategory());
-
+            String contractType = inferContractType(productCode);
             Contract contract = Contract.builder()
                     .contractNumber(contractNumber)
                     .contractType(contractType)
@@ -173,36 +171,64 @@ public class ClientController {
 
             contractMap.put(contractNumber, contract);
 
-            // Nếu là cấp 0 (root)
             if (contractLevel.equals(".")) {
                 rootContracts.add(contract);
-            } else {
-                // Tìm parent contract
-                String parentContractId = extractParentId(record.getParentContract());
-                Contract parentContract = contractMap.get(parentContractId);
-                if (parentContract != null) {
-                    parentContract.getSubContracts().add(contract);
+            }
+        }
+
+        // Bước 2: Gắn sub-contract vào parent
+        for (IssContractDetailsAPIOutputV2Record record : records) {
+            String contractNumber = record.getContractNumber();
+            String contractLevel = record.getContractLevel();
+            String parentContract = record.getParentContract();
+
+            if (!contractLevel.equals(".")) { // Không phải root
+                String parentContractId = extractParentId(parentContract);
+                Contract contract = contractMap.get(contractNumber);
+
+                if (parentContractId != null) {
+                    Contract parent = contractMap.get(parentContractId);
+                    if (parent != null) {
+                        parent.getSubContracts().add(contract);
+                    } else {
+                        // Lưu tạm nếu parent chưa tồn tại (ít xảy ra vì đã ánh xạ hết)
+                        pendingSubContracts.computeIfAbsent(parentContractId, k -> new ArrayList<>()).add(contract);
+                    }
                 }
+            }
+        }
+
+        // Bước 3: Gắn các sub-contract còn sót lại (nếu có)
+        for (Map.Entry<String, List<Contract>> entry : pendingSubContracts.entrySet()) {
+            String parentId = entry.getKey();
+            List<Contract> subs = entry.getValue();
+            Contract parent = contractMap.get(parentId);
+            if (parent != null) {
+                parent.getSubContracts().addAll(subs);
             }
         }
 
         return rootContracts;
     }
 
-    private String inferContractType(String contractName, String contractCategory) {
-        if (contractName.contains("Liability")) {
+    private String inferContractType(String productCode) {
+        if (productCode == null) return "Unknown";
+        if (productCode.contains("LIAB_TRAINING01")) {
             return "Liability";
-        } else if (contractName.contains("Issuing")) {
+        } else if (productCode.contains("ISSUING_TRAINING01")) {
             return "Issuing";
-        } else if (contractCategory.startsWith("C;")) { // Card contract
+        } else if (productCode.contains("CARD_TRAINING")) {
             return "Card";
         }
-        return "Unknown"; // Trường hợp không xác định được
+        return "Unknown";
     }
 
     private String extractParentId(String parentContract) {
         if (parentContract != null && parentContract.contains(";")) {
-            return parentContract.split(";")[1]; // Lấy phần sau dấu ";"
+            String[] parts = parentContract.split(";");
+            if (parts.length > 1) {
+                return parts[1]; // Lấy contractNumber sau dấu ";"
+            }
         }
         return null;
     }

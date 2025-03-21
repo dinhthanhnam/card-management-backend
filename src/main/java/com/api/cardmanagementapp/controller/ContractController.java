@@ -76,7 +76,7 @@ public class ContractController {
                 responseBody.put("statusCode", HttpStatus.OK.value());
                 responseBody.put("success", true);
                 responseBody.put("message", "Issuing contract created successfully. Created Contract: "
-                        + result.getCreatedContract() + ", ApplicationNumber: " + result.getApplicationNumber() + ", Liab Contract number: " + result.getContractNumber());
+                        + result.getCreatedContract() + ", ApplicationNumber: " + result.getApplicationNumber() + ", Issuing Contract number: " + result.getContractNumber());
                 responseBody.put("data", result);
                 return ResponseEntity.ok(responseBody);
             } else {
