@@ -1,7 +1,6 @@
 package com.api.cardmanagementapp.service;
 
-import com.api.cardmanagementapp.dto.card.CreateCardV3;
-import com.api.cardmanagementapp.dto.card.CreateCardV3Response;
+import com.api.cardmanagementapp.dto.card.*;
 import com.api.cardmanagementapp.interceptor.SoapHeaderInterceptor;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -20,6 +19,27 @@ public class CardService {
         // Gọi SOAP request và ép kiểu kết quả trả về thành CreateCardV3Response
         return (CreateCardV3Response) webServiceTemplate.marshalSendAndReceive(
                 createCardV3,
+                SoapHeaderInterceptor.addDefaultHeaders(sessionContextStr, userInfo, correlationId)
+        );
+    }
+
+    public SetCardStatusResponse sendSetCardStatusRequest(SetCardStatus setCardStatus,
+                                                          String sessionContextStr,
+                                                          String userInfo,
+                                                          String correlationId
+    ) {
+        return (SetCardStatusResponse) webServiceTemplate.marshalSendAndReceive(
+                setCardStatus,
+                SoapHeaderInterceptor.addDefaultHeaders(sessionContextStr, userInfo, correlationId)
+        );
+    }
+    public ActivateCardResponse sendSetCardStatusRequest(ActivateCard activateCard,
+                                                         String sessionContextStr,
+                                                         String userInfo,
+                                                         String correlationId
+    ) {
+        return (ActivateCardResponse) webServiceTemplate.marshalSendAndReceive(
+                activateCard,
                 SoapHeaderInterceptor.addDefaultHeaders(sessionContextStr, userInfo, correlationId)
         );
     }
