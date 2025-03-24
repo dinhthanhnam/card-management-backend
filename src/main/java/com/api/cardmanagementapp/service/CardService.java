@@ -33,7 +33,7 @@ public class CardService {
                 SoapHeaderInterceptor.addDefaultHeaders(sessionContextStr, userInfo, correlationId)
         );
     }
-    public ActivateCardResponse sendSetCardStatusRequest(ActivateCard activateCard,
+    public ActivateCardResponse sendActivateCardRequest(ActivateCard activateCard,
                                                          String sessionContextStr,
                                                          String userInfo,
                                                          String correlationId
